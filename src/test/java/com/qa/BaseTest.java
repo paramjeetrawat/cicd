@@ -187,7 +187,8 @@ public class BaseTest {
 		environment.put("PATH", "enter_your_path_here" + System.getenv("PATH"));
 		environment.put("ANDROID_HOME", "enter_android_home_path");
 		return AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
-				.usingDriverExecutable(new File("/usr/local/bin/node"))
+				.usingDriverExecutable(new File("\\usr\\local\\bin\\node"))
+//				.usingDriverExecutable(new File("/usr/local/bin/node"))
 				.withAppiumJS(new File("C:\\usr\\local\\lib\\node_modules\\appium\\build\\lib\\main.js"))
 //				.withAppiumJS(new File("/usr/local/lib/node_modules/appium/build/lib/main.js"))
 				.usingPort(4723)
