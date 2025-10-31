@@ -189,7 +189,7 @@ public class BaseTest {
 		return AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
 				.usingDriverExecutable(new File("C:\\Program Files\\nodejs\\node.exe"))
 //				.usingDriverExecutable(new File("/usr/local/bin/node"))
-				.withAppiumJS(new File("C:\\Users\\Rawat\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\main.js"))
+				// .withAppiumJS(new File("C:\\Users\\Rawat\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\main.js"))
 //				.withAppiumJS(new File("/usr/local/lib/node_modules/appium/build/lib/main.js"))
 				.usingPort(4723)
 				.withArgument(GeneralServerFlag.SESSION_OVERRIDE)
