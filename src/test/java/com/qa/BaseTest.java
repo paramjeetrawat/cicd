@@ -182,22 +182,58 @@ public class BaseTest {
 	}
 
 	// for Mac. Update the paths as per your Mac setup
-	public AppiumDriverLocalService getAppiumService() {
-		HashMap<String, String> environment = new HashMap<String, String>();
-		environment.put("PATH", "enter_your_path_here" + System.getenv("PATH"));
-		environment.put("ANDROID_HOME", "enter_android_home_path");
-		return AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
-				.usingDriverExecutable(new File("C:\\Program Files\\nodejs\\node.exe"))
-//				.usingDriverExecutable(new File("/usr/local/bin/node"))
-				.withAppiumJS(new File("C:\\Users\\Rawat\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\main.js"))
-//				.withAppiumJS(new File("/usr/local/lib/node_modules/appium/build/lib/main.js"))
-				.usingPort(4723)
-				.withArgument(GeneralServerFlag.SESSION_OVERRIDE)
-//				.withArgument(() -> "--allow-insecure","chromedriver_autodownload")
-				.withEnvironment(environment)
-				.withLogFile(new File("ServerLogs/server.log")));
-	}
-	
+
+    public AppiumDriverLocalService getAppiumService() {
+
+        // ✅ Use system environment and override only what’s needed
+        Map<String, String> environment = new HashMap<>(System.getenv());
+
+        // ✅ Correct Android SDK path (update user if needed)
+        environment.put("ANDROID_HOME", "C:\\Users\\Rawat\\AppData\\Local\\Android\\Sdk");
+
+        // ✅ Ensure ServerLogs folder exists
+        File logDir = new File("ServerLogs");
+        if (!logDir.exists()) logDir.mkdirs();
+
+        // ✅ Build and return Appium Service
+        return AppiumDriverLocalService.buildService(
+                new AppiumServiceBuilder()
+                        // ✅ Correct Node path (ensure this exists)
+                        .usingDriverExecutable(new File("C:\\Program Files\\nodejs\\node.exe"))
+
+                        // ✅ Correct Appium main.js path (ensure Appium installed globally for same user as Jenkins)
+                        .withAppiumJS(new File("C:\\Users\\Rawat\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\main.js"))
+
+                        // ✅ Avoid hardcoding port if Jenkins might run multiple tests
+                        .usingAnyFreePort()
+
+                        // ✅ Reuse same session between runs
+                        .withArgument(GeneralServerFlag.SESSION_OVERRIDE)
+
+                        // ✅ Optional: enable chromedriver auto-download
+                        // .withArgument(() -> "--allow-insecure", "chromedriver_autodownload")
+
+                        // ✅ Set environment and log file
+                        .withEnvironment(environment)
+                        .withLogFile(new File(logDir, "server.log"))
+        );
+    }
+//	public AppiumDriverLocalService getAppiumService() {
+//		HashMap<String, String> environment = new HashMap<String, String>();
+//		environment.put("PATH", "enter_your_path_here" + System.getenv("PATH"));
+//		environment.put("ANDROID_HOME", "enter_android_home_path");
+//		return AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+//				.usingDriverExecutable(new File("C:\\Program Files\\nodejs\\node.exe"))
+////				.usingDriverExecutable(new File("/usr/local/bin/node"))
+//				.withAppiumJS(new File("C:\\Users\\Rawat\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\main.js"))
+////				.withAppiumJS(new File("/usr/local/lib/node_modules/appium/build/lib/main.js"))
+//				.usingPort(4723)
+//				.withArgument(GeneralServerFlag.SESSION_OVERRIDE)
+////				.withArgument(() -> "--allow-insecure","chromedriver_autodownload")
+//				.withEnvironment(environment)
+//				.withLogFile(new File("ServerLogs/server.log")));
+//	}
+//
   @Parameters({"emulator", "platformName", "udid", "deviceName", "systemPort", 
 	  "chromeDriverPort", "wdaLocalPort", "webkitDebugProxyPort"})
   @BeforeTest
