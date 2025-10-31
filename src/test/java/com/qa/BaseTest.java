@@ -142,8 +142,8 @@ public class BaseTest {
 	@BeforeSuite
 	public void beforeSuite() throws Exception, Exception {
 		ThreadContext.put("ROUTINGKEY", "ServerLogs");
-		server = getAppiumService(); // -> If using Mac, uncomment this statement and comment below statement
-		// server = getAppiumServerDefault(); // -> If using Windows, uncomment this statement and comment above statement
+		// server = getAppiumService(); // -> If using Mac, uncomment this statement and comment below statement
+		server = getAppiumServerDefault(); // -> If using Windows, uncomment this statement and comment above statement
 		if(!checkIfAppiumServerIsRunnning(4723)) {
 			server.start();
 			server.clearOutPutStreams(); // -> Comment this if you want to see server logs in the console
@@ -187,9 +187,9 @@ public class BaseTest {
 		environment.put("PATH", "enter_your_path_here" + System.getenv("PATH"));
 		environment.put("ANDROID_HOME", "enter_android_home_path");
 		return AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
-				.usingDriverExecutable(new File("\\usr\\local\\bin\\node"))
+				.usingDriverExecutable(new File("C:\\Program Files\\nodejs\\node.exe"))
 //				.usingDriverExecutable(new File("/usr/local/bin/node"))
-				.withAppiumJS(new File("C:\\usr\\local\\lib\\node_modules\\appium\\build\\lib\\main.js"))
+				.withAppiumJS(new File("C:\\Users\\Rawat\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\main.js"))
 //				.withAppiumJS(new File("/usr/local/lib/node_modules/appium/build/lib/main.js"))
 				.usingPort(4723)
 				.withArgument(GeneralServerFlag.SESSION_OVERRIDE)
